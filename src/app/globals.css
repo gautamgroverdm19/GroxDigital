@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-slate-300 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight text-white;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-brand-blue/30 text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-blue ring-offset-2 ring-offset-ink-950;
+  }
+}
+
+@layer components {
+  .section {
+    @apply py-20 sm:py-24 lg:py-28;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-slate-300;
+  }
+
+  .h-display {
+    @apply text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-6xl;
+  }
+
+  .h-section {
+    @apply text-3xl font-semibold leading-tight sm:text-4xl;
+  }
+
+  .lead {
+    @apply text-base leading-relaxed text-slate-400 sm:text-lg;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-sky via-brand-blue to-brand-violet bg-clip-text text-transparent;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/[0.07] bg-ink-850/70 transition duration-300;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:border-brand-blue/40 hover:bg-ink-800/80 hover:shadow-[0_20px_60px_-30px_rgba(79,140,255,0.45)];
+  }
+
+  .icon-tile {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-brand-blue/15 to-brand-violet/15 text-brand-sky;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply btn bg-white text-ink-950 hover:bg-slate-200;
+  }
+
+  .btn-accent {
+    @apply btn bg-gradient-to-r from-brand-blue to-brand-violet text-white shadow-[0_10px_30px_-10px_rgba(99,102,241,0.7)] hover:brightness-110;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/15 text-white hover:border-white/30 hover:bg-white/[0.04];
+  }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-1.5 text-sm font-semibold text-brand-sky transition hover:text-white;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 transition focus:border-brand-blue/60 focus:outline-none focus:ring-2 focus:ring-brand-blue/30;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-200;
+  }
+
+  .placeholder-note {
+    @apply rounded-md border border-dashed border-amber-400/40 bg-amber-400/[0.06] px-1.5 py-0.5 font-mono text-[0.8em] text-amber-200;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+
+  /* Long-form content (legal pages, blog posts). */
+  .prose-content {
+    @apply max-w-prose text-[1.0625rem] leading-relaxed text-slate-300;
+  }
+  .prose-content h2 {
+    @apply mb-3 mt-12 text-2xl font-semibold;
+  }
+  .prose-content h3 {
+    @apply mb-2 mt-8 text-lg font-semibold;
+  }
+  .prose-content p {
+    @apply my-4;
+  }
+  .prose-content ul {
+    @apply my-4 list-disc space-y-2 pl-6 marker:text-brand-blue;
+  }
+  .prose-content ol {
+    @apply my-4 list-decimal space-y-2 pl-6 marker:text-slate-500;
+  }
+  .prose-content a {
+    @apply text-brand-sky underline decoration-brand-sky/40 underline-offset-2 hover:decoration-brand-sky;
+  }
+  .prose-content strong {
+    @apply font-semibold text-white;
+  }
+}
+
+/* Scroll reveal: content is only hidden once JS has confirmed it can reveal it. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animated connectors in workflow diagrams. */
+.flow-line {
+  stroke-dasharray: 4 8;
+  animation: dash 1.2s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,127 @@
+import {
+  Briefcase,
+  Building2,
+  GraduationCap,
+  HeartPulse,
+  Hotel,
+  Landmark,
+  Lightbulb,
+  Network,
+  Plane,
+  Rocket,
+  ShoppingBag,
+  Sparkles,
+  Stethoscope,
+  Store,
+  UserRound,
+  UtensilsCrossed,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+
+export type Industry = { name: string; icon: LucideIcon; desc: string; services: string[] };
+
+export const industries: Industry[] = [
+  {
+    name: "E-commerce",
+    icon: ShoppingBag,
+    desc: "Stores, shopping ads, cart recovery and retention flows.",
+    services: ["ecommerce", "meta-ads", "email-marketing"],
+  },
+  {
+    name: "Real Estate",
+    icon: Building2,
+    desc: "Project websites, qualified buyer leads and site-visit scheduling.",
+    services: ["lead-generation", "meta-ads", "whatsapp-marketing"],
+  },
+  {
+    name: "Healthcare",
+    icon: HeartPulse,
+    desc: "Patient-friendly websites, local visibility and appointment systems.",
+    services: ["website-development", "google-business-profile", "ai-automation"],
+  },
+  {
+    name: "Clinics",
+    icon: Stethoscope,
+    desc: "Bookings, reminders, reviews and local search for clinics.",
+    services: ["google-business-profile", "whatsapp-marketing", "seo"],
+  },
+  {
+    name: "Education",
+    icon: GraduationCap,
+    desc: "Admissions campaigns, course pages and enquiry follow-up.",
+    services: ["lead-generation", "social-media-marketing", "ai-solutions"],
+  },
+  {
+    name: "Finance",
+    icon: Landmark,
+    desc: "Trust-building websites and compliant lead generation for financial firms.",
+    services: ["website-development", "google-ads", "linkedin-marketing"],
+  },
+  {
+    name: "Professional Services",
+    icon: Briefcase,
+    desc: "Authority content, LinkedIn and consultation funnels.",
+    services: ["linkedin-marketing", "seo", "lead-generation"],
+  },
+  {
+    name: "Immigration & Visa Consultants",
+    icon: Plane,
+    desc: "Eligibility funnels, AI FAQ assistants and counsellor routing.",
+    services: ["lead-generation", "ai-solutions", "whatsapp-marketing"],
+  },
+  {
+    name: "Restaurants",
+    icon: UtensilsCrossed,
+    desc: "Menus, reservations, Google Maps and local social content.",
+    services: ["google-business-profile", "social-media-marketing", "website-development"],
+  },
+  {
+    name: "Hospitality",
+    icon: Hotel,
+    desc: "Direct-booking websites, guest messaging and reviews.",
+    services: ["website-development", "whatsapp-marketing", "google-ads"],
+  },
+  {
+    name: "Retail",
+    icon: Store,
+    desc: "Footfall and online sales through local and social campaigns.",
+    services: ["google-business-profile", "meta-ads", "ecommerce"],
+  },
+  {
+    name: "Beauty & Wellness",
+    icon: Sparkles,
+    desc: "Visual social content, bookings and repeat-visit reminders.",
+    services: ["social-media-marketing", "whatsapp-marketing", "meta-ads"],
+  },
+  {
+    name: "Startups",
+    icon: Rocket,
+    desc: "Launch websites, MVPs, go-to-market campaigns and automation.",
+    services: ["website-development", "digital-marketing", "ai-automation"],
+  },
+  {
+    name: "Local Businesses",
+    icon: Users,
+    desc: "Get found locally and turn searches into calls and visits.",
+    services: ["google-business-profile", "seo", "google-ads"],
+  },
+  {
+    name: "Coaches & Consultants",
+    icon: Lightbulb,
+    desc: "Personal brand sites, lead magnets and booking automation.",
+    services: ["content-creative", "lead-generation", "email-marketing"],
+  },
+  {
+    name: "Personal Brands",
+    icon: UserRound,
+    desc: "Positioning, content and a website that builds authority.",
+    services: ["website-development", "linkedin-marketing", "content-creative"],
+  },
+  {
+    name: "B2B Companies",
+    icon: Network,
+    desc: "LinkedIn, search and nurture systems for longer sales cycles.",
+    services: ["linkedin-marketing", "google-ads", "ai-automation"],
+  },
+];
