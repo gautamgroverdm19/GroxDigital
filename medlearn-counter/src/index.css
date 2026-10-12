@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens (RGB channels so Tailwind opacity modifiers work). */
+:root {
+  --primary: 14 124 123;        /* #0E7C7B */
+  --primary-strong: 10 95 94;   /* #0A5F5E */
+  --primary-soft: 226 242 241;  /* #E2F2F1 */
+  --primary-light: 61 189 181;  /* #3DBDB5 */
+  --on-primary: 255 255 255;
+  --info: 47 94 158;            /* #2F5E9E */
+  --ink: 15 42 46;              /* #0F2A2E */
+  --ink-muted: 74 96 100;       /* #4A6064 */
+  --ink-alt: 46 68 72;          /* #2E4448 */
+  --bg: 244 247 247;            /* #F4F7F7 */
+  --surface: 255 255 255;
+  --line: 221 230 231;          /* #DDE6E7 */
+  --line-soft: 238 241 242;     /* #EEF1F2 */
+  --caution-bg: 255 246 229; --caution-border: 240 212 154; --caution-text: 110 69 0; --caution-body: 92 58 0;
+  --danger-bg: 252 237 236;  --danger-border: 241 196 193;  --danger-text: 147 34 34; --danger-body: 126 29 29;
+  --success: 25 99 58; --success-bg: 227 243 234;
+  --gold: 168 106 18; --gold-bg: 253 241 221;
+  --streak: 154 74 0; --streak-bg: 255 243 230;
+  --st-ns-bg: 238 241 242; --st-ns-text: 74 96 100;
+  --st-l-bg: 230 238 248;  --st-l-text: 35 78 134;
+  --st-p-bg: 238 234 250;  --st-p-text: 74 58 158;
+  --st-m-bg: 227 243 234;  --st-m-text: 25 99 58;
+  color-scheme: light;
+}
+
+.dark {
+  --primary: 61 189 181;        /* #3DBDB5 */
+  --primary-strong: 140 222 216;
+  --primary-soft: 18 56 58;     /* #12383A */
+  --primary-light: 95 208 200;
+  --on-primary: 6 34 36;
+  --info: 130 170 225;
+  --ink: 230 240 240;           /* #E6F0F0 */
+  --ink-muted: 157 180 183;     /* #9DB4B7 */
+  --ink-alt: 197 214 216;
+  --bg: 12 23 25;               /* #0C1719 */
+  --surface: 19 35 42;          /* #13232A */
+  --line: 34 56 63;             /* #22383F */
+  --line-soft: 27 45 52;
+  --caution-bg: 58 46 20; --caution-border: 107 83 32; --caution-text: 243 198 107; --caution-body: 236 210 160;
+  --danger-bg: 58 26 26;  --danger-border: 110 43 43;  --danger-text: 242 163 160; --danger-body: 240 196 194;
+  --success: 143 217 174; --success-bg: 22 53 39;
+  --gold: 233 180 90; --gold-bg: 58 44 20;
+  --streak: 240 163 94; --streak-bg: 58 36 18;
+  --st-ns-bg: 27 45 52;  --st-ns-text: 157 180 183;
+  --st-l-bg: 27 51 80;   --st-l-text: 169 200 240;
+  --st-p-bg: 42 37 80;   --st-p-text: 195 184 245;
+  --st-m-bg: 22 53 39;   --st-m-text: 143 217 174;
+  color-scheme: dark;
+}
+
+html, body { background: rgb(var(--bg)); color: rgb(var(--ink)); }
+body { font-family: Figtree, system-ui, sans-serif; font-weight: 500; -webkit-tap-highlight-color: transparent; }
+#root { min-height: 100dvh; }
+
+@layer components {
+  .card { @apply rounded-card border border-line bg-surface p-4 sm:p-5; }
+  .overline { @apply text-sm font-bold uppercase tracking-[0.08em] text-ink-muted; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-chip px-2.5 py-1 text-xs font-bold; }
+  .btn { @apply inline-flex h-[52px] items-center justify-center gap-2 rounded-btn px-5 text-[17px] font-extrabold transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-primary text-onprimary hover:bg-primary-strong dark:hover:bg-primary-light; }
+  .btn-secondary { @apply btn border-[1.5px] border-primary bg-surface text-primary-strong dark:text-primary; }
+  .btn-tonal { @apply btn bg-primary-soft text-primary-strong; }
+  .btn-text { @apply btn h-11 px-2 text-primary-strong dark:text-primary; }
+  .input { @apply w-full rounded-btn border border-line bg-surface px-4 py-3 text-base text-ink outline-none placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/30; }
+  .focus-ring { @apply outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg; }
+}
+
+.flip-scene { perspective: 1200px; }
+.flip-card { transition: transform 400ms ease; transform-style: preserve-3d; }
+.flip-card.flipped { transform: rotateY(180deg); }
+.flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-back { transform: rotateY(180deg); }
+.fill-anim { transition: width 600ms ease-out, height 600ms ease-out, stroke-dashoffset 600ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
