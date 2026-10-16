@@ -6,16 +6,52 @@
 //   set(key, value) -> Promise<void>
 //   remove(key)     -> Promise<void>
 //   keys()          -> Promise<string[]>
+//
+// Some hosts (sandboxed frames, private windows) block localStorage and even
+// throw when you touch it. In that case we fall back to in-memory storage so
+// the app still opens; progress then lasts only until the page is closed.
 
 const PREFIX = 'mlc:';
 
-export function createLocalStorageAdapter() {
-  const ls = typeof window !== 'undefined' ? window.localStorage : null;
+function memoryStore() {
+  const m = new Map();
   return {
-    name: 'localStorage',
+    getItem: (k) => (m.has(k) ? m.get(k) : null),
+    setItem: (k, v) => m.set(k, String(v)),
+    removeItem: (k) => m.delete(k),
+    allKeys: () => [...m.keys()],
+  };
+}
+
+function pickStore() {
+  try {
+    const ls = window.localStorage;
+    const probe = PREFIX + '__probe';
+    ls.setItem(probe, '1');
+    ls.removeItem(probe);
+    return {
+      getItem: (k) => ls.getItem(k),
+      setItem: (k, v) => ls.setItem(k, v),
+      removeItem: (k) => ls.removeItem(k),
+      allKeys: () => Object.keys(ls),
+      persistent: true,
+    };
+  } catch {
+    return memoryStore();
+  }
+}
+
+export function createLocalStorageAdapter() {
+  const ls = typeof window !== 'undefined' ? pickStore() : memoryStore();
+  return {
+    name: ls.persistent ? 'localStorage' : 'memory',
     async get(key) {
-      if (!ls) return null;
-      const raw = ls.getItem(PREFIX + key);
+      let raw = null;
+      try {
+        raw = ls.getItem(PREFIX + key);
+      } catch {
+        return null;
+      }
       if (raw === null) return null;
       try {
         return JSON.parse(raw);
@@ -24,7 +60,6 @@ export function createLocalStorageAdapter() {
       }
     },
     async set(key, value) {
-      if (!ls) return;
       try {
         ls.setItem(PREFIX + key, JSON.stringify(value));
       } catch (err) {
@@ -33,11 +68,16 @@ export function createLocalStorageAdapter() {
       }
     },
     async remove(key) {
-      ls?.removeItem(PREFIX + key);
+      try {
+        ls.removeItem(PREFIX + key);
+      } catch {}
     },
     async keys() {
-      if (!ls) return [];
-      return Object.keys(ls).filter((k) => k.startsWith(PREFIX)).map((k) => k.slice(PREFIX.length));
+      try {
+        return ls.allKeys().filter((k) => k.startsWith(PREFIX)).map((k) => k.slice(PREFIX.length));
+      } catch {
+        return [];
+      }
     },
   };
 }
