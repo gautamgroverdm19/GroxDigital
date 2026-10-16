@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')).render(
 );
 
 // Install-to-home-screen + offline support on your own hosting (Vercel/Netlify/etc.).
-if (import.meta.env.PROD && 'serviceWorker' in navigator && window.isSecureContext) {
+if (import.meta.env.PROD && !import.meta.env.VITE_SINGLE && location.protocol.startsWith('http') && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   });

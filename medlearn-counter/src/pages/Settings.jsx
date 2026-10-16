@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import ImportPanel, { ColumnGuide, SAMPLE_TEMPLATE } from '../components/ImportPanel.jsx';
+import ImportPanel, { ColumnGuide, sampleTemplateHref } from '../components/ImportPanel.jsx';
 import { Icon, PageHeader, SafetyFooter, Segmented, Sheet, Toggle } from '../components/ui/index.jsx';
 import { DAILY_GOAL_OPTIONS, SAFETY_FULL } from '../config/constants.js';
 import { useApp } from '../state/AppContext.jsx';
@@ -117,7 +117,7 @@ export default function Settings() {
         <p className="text-sm font-semibold text-ink-muted">{medicines.length.toLocaleString('en-IN')} medicines in the app now. Re-importing keeps your progress and your own added details.</p>
         <ImportPanel compact />
         <ColumnGuide />
-        <a href={SAMPLE_TEMPLATE} download="medlearn-sample-template.csv" className="btn-secondary w-full">
+        <a href={sampleTemplateHref()} download="medlearn-sample-template.csv" className="btn-secondary w-full">
           <Icon name="download" /> Download sample CSV template
         </a>
       </section>

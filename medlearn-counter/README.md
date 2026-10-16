@@ -8,6 +8,17 @@ salt, class, rack/shelf, dispensing alerts, quiz, flashcards, spaced repetition,
 
 ---
 
+## Sirf ek HTML file (sabse aasaan)
+
+`medlearn-counter.html` — poori app ek hi file mein (code, design, aapki inventory, sample template).
+- **Computer par:** file par double-click karo, Chrome/Edge mein khul jayegi. Install ya internet ki zarurat nahi
+  (font ke liye internet ho to behtar dikhta hai, warna normal font aata hai).
+- **Website par:** yeh file kisi bhi hosting par upload karo (Netlify Drop, GitHub Pages, apni site), naam `index.html` rakh sakte ho.
+- **Phone par:** file ko website par daalo aur link kholo. (Phone mein file seedha kholne se kuch phones par data save nahi hota.)
+- Progress usi browser mein save hota hai jahan file kholi. File ka naam ya jagah badloge to browser use nayi app samjhega —
+  pehle **Settings → Backup** le lo.
+- Code badalne ke baad nayi file banane ke liye: `npm run build:single`
+
 ## Install kaise karein (beginner ke liye, step by step)
 
 ### Step 1 — Node.js install karo (sirf ek baar)

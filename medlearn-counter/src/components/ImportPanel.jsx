@@ -12,7 +12,15 @@ const FIELD_LABEL = {
 };
 
 export const BUNDLED_INVENTORY = `${import.meta.env.BASE_URL}data/store-inventory.csv`;
-export const SAMPLE_TEMPLATE = `${import.meta.env.BASE_URL}sample-template.csv`;
+const SAMPLE_TEMPLATE_URL = `${import.meta.env.BASE_URL}sample-template.csv`;
+
+// The single-file build (medlearn-counter.html) embeds these files in <script type="text/plain"> tags,
+// so the app also works when opened straight from disk.
+const embedded = (id) => (typeof document !== 'undefined' ? document.getElementById(id)?.textContent : null);
+export function sampleTemplateHref() {
+  const t = embedded('embedded-template');
+  return t ? `data:text/csv;charset=utf-8,${encodeURIComponent(t)}` : SAMPLE_TEMPLATE_URL;
+}
 
 export function ColumnGuide() {
   return (
@@ -65,6 +73,8 @@ export default function ImportPanel({ onDone, compact = false }) {
 
   const loadBundled = () =>
     run(async () => {
+      const inline = embedded('embedded-inventory');
+      if (inline) return { ...(await importText(inline)), fileName: 'store-inventory.csv' };
       const res = await fetch(BUNDLED_INVENTORY);
       if (!res.ok) throw new Error('Could not load the bundled inventory file.');
       return { ...(await importText(await res.text())), fileName: 'store-inventory.csv' };
@@ -87,7 +97,7 @@ export default function ImportPanel({ onDone, compact = false }) {
         <Icon name="file" /> Load my store inventory (bundled CSV)
       </button>
       {!compact && (
-        <a href={SAMPLE_TEMPLATE} download="medlearn-sample-template.csv" className="btn-text w-full">
+        <a href={sampleTemplateHref()} download="medlearn-sample-template.csv" className="btn-text w-full">
           <Icon name="download" /> Download sample CSV template
         </a>
       )}
