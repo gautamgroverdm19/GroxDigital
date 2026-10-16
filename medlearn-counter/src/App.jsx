@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter, MemoryRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import AppShell from './components/layout/AppShell.jsx';
 import { AppProvider, useApp } from './state/AppContext.jsx';
@@ -52,13 +52,26 @@ function AppRoutes() {
   );
 }
 
+// Some hosts run the page in a frame whose address is not a real URL
+// (e.g. "about:srcdoc"). The hash router cannot work there, so keep the
+// current screen in memory instead.
+function canUseUrlRouting() {
+  try {
+    new URL('/', window.location.href);
+    return true;
+  } catch {
+    return false;
+  }
+}
+const Router = canUseUrlRouting() ? HashRouter : MemoryRouter;
+
 export default function App() {
   return (
     <AppProvider>
-      <HashRouter>
+      <Router>
         <ScrollTop />
         <AppRoutes />
-      </HashRouter>
+      </Router>
     </AppProvider>
   );
 }
