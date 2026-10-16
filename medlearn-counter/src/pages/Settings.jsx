@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ImportPanel, { ColumnGuide, SAMPLE_TEMPLATE } from '../components/ImportPanel.jsx';
 import { Icon, PageHeader, SafetyFooter, Segmented, Sheet, Toggle } from '../components/ui/index.jsx';
 import { DAILY_GOAL_OPTIONS, SAFETY_FULL } from '../config/constants.js';
@@ -13,6 +13,45 @@ function Row({ title, sub, children }) {
       </div>
       {children}
     </div>
+  );
+}
+
+function InstallCard() {
+  const [canPrompt, setCanPrompt] = useState(!!window.__installPrompt);
+  const installed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  useEffect(() => {
+    const on = () => setCanPrompt(true);
+    window.addEventListener('installable', on);
+    return () => window.removeEventListener('installable', on);
+  }, []);
+  if (installed) return null;
+  const install = async () => {
+    const e = window.__installPrompt;
+    if (!e) return;
+    e.prompt();
+    await e.userChoice;
+    window.__installPrompt = null;
+    setCanPrompt(false);
+  };
+  return (
+    <section className="card space-y-3">
+      <h2 className="text-lg font-extrabold">Install on your phone</h2>
+      <p className="text-sm font-semibold text-ink-muted">No Play Store needed. The app gets its own icon and works without internet after the first open.</p>
+      {canPrompt ? (
+        <button className="btn-primary w-full" onClick={install}>
+          <Icon name="download" /> Install app
+        </button>
+      ) : (
+        <ul className="space-y-1.5 text-sm font-semibold text-ink-alt">
+          <li>
+            <b>Android (Chrome):</b> menu ⋮ → <b>Add to Home screen</b> / <b>Install app</b>
+          </li>
+          <li>
+            <b>iPhone (Safari):</b> Share button → <b>Add to Home Screen</b>
+          </li>
+        </ul>
+      )}
+    </section>
   );
 }
 
@@ -70,6 +109,8 @@ export default function Settings() {
           <input type="time" className="input w-32 py-2" value={settings.reminderTime || ''} onChange={(e) => setSettings({ reminderTime: e.target.value })} aria-label="Review reminder time" />
         </Row>
       </section>
+
+      <InstallCard />
 
       <section className="card space-y-3">
         <h2 className="text-lg font-extrabold">Import medicine data</h2>

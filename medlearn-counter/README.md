@@ -47,11 +47,29 @@ App pehli baar khulega to **Welcome** screen aayegi:
 
 Baad mein Settings (Home par ⚙️) se dobara import kar sakte ho. Re-import par progress aur aapki likhi details safe rehti hain.
 
-### Online daalna ho (optional)
-```bash
-npm run build
-```
-`dist/` folder ko kisi bhi static hosting (Netlify, Vercel, GitHub Pages) par upload kar do.
+### Online chalana (bina Play Store / App Store ke)
+
+App ek website hai. Ek baar online daal do, phir kisi bhi phone ya computer par link kholo aur use karo.
+Phone par **Add to Home Screen** karne se apna icon aata hai, full screen khulta hai, aur pehli baar ke baad
+bina internet bhi chalta hai (PWA).
+
+**Sabse aasaan — Vercel (free):**
+1. https://vercel.com par GitHub account se login karo.
+2. **Add New → Project** → apni `GroxDigital` repo chuno → **Import**.
+3. **Root Directory** mein `medlearn-counter` chuno (Edit dabake). Baaki sab apne aap aa jayega.
+4. **Deploy** dabao. 1 minute mein `https://kuch-naam.vercel.app` jaisa link milega.
+5. Aage jab bhi GitHub par code update hoga, site apne aap update ho jayegi.
+
+**Ya Netlify (free):** https://app.netlify.com → **Add new site → Import an existing project** → repo chuno →
+Base directory `medlearn-counter` → Deploy. (Settings `netlify.toml` mein pehle se hain.)
+
+**Phone par install:**
+- Android (Chrome): link kholo → menu ⋮ → **Install app** / **Add to Home screen**. (Settings mein "Install app" button bhi dikhega.)
+- iPhone (Safari): link kholo → Share button → **Add to Home Screen**.
+
+**Dhyan rakho:** data us phone/browser mein hi save hota hai. Doosre device par wahi progress chahiye to
+**Settings → Backup** download karke wahan **Restore** karo. (Har device par sync chahiye to baad mein
+Supabase/Firebase login jod sakte hain — neeche dekho.)
 
 ---
 
